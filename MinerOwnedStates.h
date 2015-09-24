@@ -174,5 +174,36 @@ public:
 
 
 
+//------------------------------------------------------------------------
+//
+//  wait until the barman give the drink
+//------------------------------------------------------------------------
+class WaitADrink : public State<Miner>
+{
+private:
+
+	WaitADrink() {}
+
+	//copy ctor and assignment should be private
+	WaitADrink(const WaitADrink&);
+	WaitADrink& operator=(const WaitADrink&);
+
+public:
+
+	//this is a singleton
+	static WaitADrink* Instance();
+
+	virtual void Enter(Miner* miner);
+
+	virtual void Execute(Miner* miner);
+
+	virtual void Exit(Miner* miner);
+
+	virtual bool OnMessage(Miner* agent, const Telegram& msg);
+};
+
+
+
+
 
 #endif

@@ -235,17 +235,19 @@ void QuenchThirst::Enter(Miner* pMiner)
 
 void QuenchThirst::Execute(Miner* pMiner)
 {
-  pMiner->BuyAndDrinkAWhiskey();
+  /*pMiner->BuyAndDrinkAWhiskey();
 
   cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "That's mighty fine sippin' liquer";
+  
+  pMiner->GetFSM()->ChangeState(EnterMineAndDigForNugget::Instance());  */
 
-  pMiner->GetFSM()->ChangeState(EnterMineAndDigForNugget::Instance());  
+	pMiner->GetFSM()->ChangeState(WaitADrink::Instance());
 }
 
 
 void QuenchThirst::Exit(Miner* pMiner)
 { 
-  cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "Leaving the saloon, feelin' good";
+  //cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "Leaving the saloon, feelin' good";
 }
 
 
@@ -287,6 +289,61 @@ bool EatStew::OnMessage(Miner* pMiner, const Telegram& msg)
 {
   //send msg to global message handler
   return false;
+}
+
+
+//------------------------------------------------------------------------EatStew
+
+WaitADrink* WaitADrink::Instance()
+{
+	static WaitADrink instance;
+
+	return &instance;
+}
+
+
+void WaitADrink::Enter(Miner* pMiner)
+{
+	cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "I'm thirsty ! Barman, I want a drink !";
+	Dispatch->DispatchMessage(0, //time delay
+		pMiner->ID(),           //sender ID
+		ent_Barman,  //receiver ID
+		Msg_GiveMeADrink,        //msg
+		NO_ADDITIONAL_INFO);
+}
+
+void WaitADrink::Execute(Miner* pMiner)
+{
+	cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "I'm waiting my drink.";
+}
+
+void WaitADrink::Exit(Miner* pMiner)
+{
+	cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "Thanks for the drink !";
+	pMiner->BuyAndDrinkAWhiskey();
+
+	cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "That's mighty fine sippin' liquer";
+
+}
+
+
+bool WaitADrink::OnMessage(Miner* pMiner, const Telegram& msg)
+{
+	SetTextColor(BACKGROUND_RED | FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+
+	switch (msg.Msg)
+	{
+		case Msg_DrinkReady:
+		{
+			cout << "\nMessage handled by " << GetNameOfEntity(pMiner->ID()) << " at time: "
+				<< Clock->GetCurrentTime();
+
+			SetTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+
+			pMiner->GetFSM()->ChangeState(EnterMineAndDigForNugget::Instance());
+		}
+	}
+	return false;
 }
 
 
