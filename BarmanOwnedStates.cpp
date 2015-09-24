@@ -134,7 +134,7 @@ void GiveADrink::Execute(Barman* barman)
 		{
 			cout << "\n" << GetNameOfEntity(barman->ID()) << ": Here we are ! Your glas is ready " << GetNameOfEntity(barman->GetCustomerID()) << " !";
 
-			Dispatch->DispatchMessage(1.1,                  //time delay
+			Dispatch->DispatchMessage(0,                  //time delay
 				barman->ID(),           //sender ID
 				barman->GetCustomerID(),           //receiver ID
 				Msg_DrinkReady,        //msg
