@@ -9,7 +9,7 @@ bool Barman::HandleMessage(const Telegram& msg)
 void Barman::Update()
 {
 	SetTextColor(FOREGROUND_BLUE | FOREGROUND_INTENSITY);
-
+//
 	m_pStateMachine->Update();
 }
 
