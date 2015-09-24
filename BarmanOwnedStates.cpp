@@ -85,8 +85,11 @@ bool WaitingForCustomer::OnMessage(Barman* barman, const Telegram& msg)
 
 			SetTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 
+
+			barman->SetCustomerID(msg.Sender);
+
 			cout << "\n" << GetNameOfEntity(barman->ID()) <<
-				": Hi " << GetNameOfEntity(msg.Sender) << " ! I will prepare your drink !";
+				": Hi " << GetNameOfEntity(barman->GetCustomerID()) << " ! I will prepare your drink !";
 			
 			barman->GetFSM()->ChangeState(GiveADrink::Instance());
 		}
