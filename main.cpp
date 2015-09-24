@@ -5,7 +5,7 @@
 #include "Miner.h"
 #include "MinersWife.h"
 #include "Barman.h"
-#include "Soulard.h"
+#include "Drunkard.h"
 #include "EntityManager.h"
 #include "MessageDispatcher.h"
 #include "misc/ConsoleUtils.h"
@@ -30,8 +30,8 @@ int main()
   //create his wife
   MinersWife* Elsa = new MinersWife(ent_Elsa);
 
-  // create Soulard
-  Soulard* soulard = new Soulard(ent_Soulard);
+  // create Drunkard
+  Drunkard* Drunkard = new Drunkard(ent_Drunkard);
 
   // create barman
   Barman* barman = new Barman(ent_Barman);
@@ -39,7 +39,7 @@ int main()
   //register them with the entity manager
   EntityMgr->RegisterEntity(Bob);
   EntityMgr->RegisterEntity(Elsa);
-  EntityMgr->RegisterEntity(soulard);
+  EntityMgr->RegisterEntity(Drunkard);
   EntityMgr->RegisterEntity(barman);
   //
 
@@ -48,7 +48,7 @@ int main()
   { 
     Bob->Update();
     Elsa->Update();
-	soulard->Update();
+	Drunkard->Update();
 	barman->Update();
 
     //dispatch any delayed messages
@@ -61,7 +61,7 @@ int main()
   delete Bob;
   delete Elsa;
   delete barman;
-  delete soulard;
+  delete Drunkard;
 
   //wait for a keypress before exiting
   PressAnyKeyToContinue();

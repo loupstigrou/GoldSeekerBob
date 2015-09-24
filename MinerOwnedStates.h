@@ -24,7 +24,7 @@ struct Telegram;
 //  In this state the miner will walk to a goldmine and pick up a nugget
 //  of gold. If the miner already has a nugget of gold he'll change state
 //  to VisitBankAndDepositGold. If he gets thirsty he'll change state
-//  to QuenchThirst
+//  to GoToSaloon
 //------------------------------------------------------------------------
 class EnterMineAndDigForNugget : public State<Miner>
 {
@@ -118,20 +118,20 @@ public:
 //  his thirst is quenched. When satisfied he returns to the goldmine
 //  and resumes his quest for nuggets.
 //------------------------------------------------------------------------
-class QuenchThirst : public State<Miner>
+class GoToSaloon : public State<Miner>
 {
 private:
   
-  QuenchThirst(){}
+  GoToSaloon(){}
 
   //copy ctor and assignment should be private
-  QuenchThirst(const QuenchThirst&);
-  QuenchThirst& operator=(const QuenchThirst&);
+  GoToSaloon(const GoToSaloon&);
+  GoToSaloon& operator=(const GoToSaloon&);
  
 public:
 
   //this is a singleton
-  static QuenchThirst* Instance();
+  static GoToSaloon* Instance();
 
   virtual void Enter(Miner* miner);
 
@@ -203,7 +203,33 @@ public:
 };
 
 
+//------------------------------------------------------------------------
+//
+//  Fight with the drunkard
+//------------------------------------------------------------------------
+class FightWithDrunkard: public State<Miner>
+{
+private:
 
+	FightWithDrunkard() {}
+
+	//copy ctor and assignment should be private
+	FightWithDrunkard(const FightWithDrunkard&);
+	FightWithDrunkard& operator=(const FightWithDrunkard&);
+
+public:
+
+	//this is a singleton
+	static FightWithDrunkard* Instance();
+
+	virtual void Enter(Miner* miner);
+
+	virtual void Execute(Miner* miner);
+
+	virtual void Exit(Miner* miner);
+
+	virtual bool OnMessage(Miner* agent, const Telegram& msg);
+};
 
 
 #endif
