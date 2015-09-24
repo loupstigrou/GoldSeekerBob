@@ -26,7 +26,6 @@ inline std::string GetNameOfEntity(int n)
     
     return "Elsa"; 
   case ent_Soulard:
-
 	  return "Soulard";
   case ent_Barman:
 
