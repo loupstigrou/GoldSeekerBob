@@ -124,7 +124,7 @@ void GiveADrink::Execute(Barman* barman)
 		case 1:
 		{
 			cout << "\n" << GetNameOfEntity(barman->ID()) << ": Let's grab a bottle !";
-			barman->DecreaseBottles();
+			barman->SellOneBottle();
 		}
 		case 2:
 		{
@@ -140,7 +140,15 @@ void GiveADrink::Execute(Barman* barman)
 				Msg_DrinkReady,        //msg
 				NO_ADDITIONAL_INFO);
 
-			barman->GetFSM()->ChangeState(WaitingForCustomer::Instance());
+			if (barman->NeededBottles())
+			{
+				barman->GetFSM()->ChangeState(SearchForBottles::Instance());
+			}
+			else
+			{
+				barman->GetFSM()->ChangeState(WaitingForCustomer::Instance());
+			}
+			
 		}
 	}
 
