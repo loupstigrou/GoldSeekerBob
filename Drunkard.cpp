@@ -15,19 +15,18 @@ void Drunkard::Update()
 
 
 
-
-
-
-
-bool Drunkard::EmptyGlass()const
-{
-	if (m_glassContainer == 0)
-	{
-		return true;
-	}
-
-	return false;
-}
+//bool Drunkard::EmptyGlass()const
+//{
+//	if (m_glassContainer == 0)
+//	{
+//		return true;
+//	}
+//	else
+//	{
+//		return false;
+//	}
+//	
+//}
 
 
 

@@ -341,7 +341,7 @@ bool WaitADrink::OnMessage(Miner* pMiner, const Telegram& msg)
 				<< Clock->GetCurrentTime();
 
 			SetTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
-			pMiner->GetFSM()->ChangeState(FightWithDrunkard::Instance());
+			//pMiner->GetFSM()->ChangeState(FightWithDrunkard::Instance());
 		}
 	}
 	return false;

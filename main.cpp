@@ -31,7 +31,7 @@ int main()
   MinersWife* Elsa = new MinersWife(ent_Elsa);
 
   // create Drunkard
-  Drunkard* Drunkard = new Drunkard(ent_Drunkard);
+  Drunkard* John = new Drunkard(ent_Drunkard);
 
   // create barman
   Barman* barman = new Barman(ent_Barman);
@@ -39,7 +39,7 @@ int main()
   //register them with the entity manager
   EntityMgr->RegisterEntity(Bob);
   EntityMgr->RegisterEntity(Elsa);
-  EntityMgr->RegisterEntity(Drunkard);
+  EntityMgr->RegisterEntity(John);
   EntityMgr->RegisterEntity(barman);
   //
 
@@ -48,7 +48,7 @@ int main()
   { 
     Bob->Update();
     Elsa->Update();
-	Drunkard->Update();
+	John->Update();
 	barman->Update();
 
     //dispatch any delayed messages
@@ -61,7 +61,7 @@ int main()
   delete Bob;
   delete Elsa;
   delete barman;
-  delete Drunkard;
+  delete John;
 
   //wait for a keypress before exiting
   PressAnyKeyToContinue();

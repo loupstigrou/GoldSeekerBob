@@ -63,7 +63,7 @@ public:
 		//set up the state machine
 		m_pStateMachine = new StateMachine<Drunkard>(this);
 
-		m_pStateMachine->SetCurrentState(GoHomeAndSleepTilRested::Instance());
+//		m_pStateMachine->SetCurrentState(GoHomeAndSleepTilRested::Instance());
 
 	}
 
@@ -87,7 +87,7 @@ public:
 
 	void          DrinkWhiskey(){ m_drunkness += 1; m_glassContainer -= 1; m_iFatigue += 1; }
 
-	bool		  EmptyGlass()const{return m_glassContainer};
+	bool		  EmptyGlass()const{}
 	void          SetNewDrink(){  m_glassContainer = 3; }
 
 };
