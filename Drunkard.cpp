@@ -1,4 +1,5 @@
 #include "Drunkard.h"
+#include "EntityNames.h"
 
 bool Drunkard::HandleMessage(const Telegram& msg)
 {
@@ -27,7 +28,11 @@ void Drunkard::Update()
 //	}
 //	
 //}
-
+void Drunkard::Speak(std::string const &str1)
+{
+	SetTextColor(FOREGROUND_BLUE| FOREGROUND_INTENSITY);
+	std::cout << "\n" << GetNameOfEntity(ID()) << ": " << str1;
+}
 
 
 bool Drunkard::Fatigued()const

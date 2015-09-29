@@ -1,4 +1,5 @@
 #include "Barman.h"
+#include "EntityNames.h"
 
 bool Barman::HandleMessage(const Telegram& msg)
 {
@@ -21,4 +22,10 @@ bool Barman::NeededBottles()const
 bool Barman::DrinkIsReady()const
 {
 	return m_prepareDrinkTime > 3;
+}
+
+void Barman::Speak(std::string const &str1)
+{
+	SetTextColor(BACKGROUND_BLUE| FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+	std::cout << "\n" << GetNameOfEntity(ID()) << ": " << str1;
 }

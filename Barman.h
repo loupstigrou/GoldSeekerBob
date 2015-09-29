@@ -86,6 +86,8 @@ public:
 	void          IncreasePrepareDrinkTime() { m_prepareDrinkTime += 1; }
 	bool          DrinkIsReady()const;
 
+	void  Speak(std::string const &str1);
+
 };
 
 #endif

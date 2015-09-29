@@ -254,6 +254,36 @@ public:
 	virtual bool OnMessage(Miner* agent, const Telegram& msg);
 };
 
+
+
+//------------------------------------------------------------------------
+//
+//  MinerAskATableToSit
+//------------------------------------------------------------------------
+class MinerAskATableToSit : public State<Miner>
+{
+private:
+
+	MinerAskATableToSit() {}
+
+	//copy ctor and assignment should be private
+	MinerAskATableToSit(const MinerAskATableToSit&);
+	MinerAskATableToSit& operator=(const MinerAskATableToSit&);
+
+public:
+
+	//this is a singleton
+	static MinerAskATableToSit* Instance();
+
+	virtual void Enter(Miner* miner);
+
+	virtual void Execute(Miner* miner);
+
+	virtual void Exit(Miner* miner);
+
+	virtual bool OnMessage(Miner* agent, const Telegram& msg);
+};
+
 //------------------------------------------------------------------------
 //
 //  DrinkAGlass

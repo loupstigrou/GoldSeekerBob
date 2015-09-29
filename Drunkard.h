@@ -93,6 +93,8 @@ public:
 
 	bool          IsDrunk()const;
 
+	void Speak(std::string const &str1);
+
 };
 
 #endif

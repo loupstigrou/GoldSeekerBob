@@ -49,6 +49,12 @@ public:
   virtual bool  HandleMessage(const Telegram& msg)=0;
 
   int           ID()const{return m_ID;}  
+
+  void  Speak(std::string const &str1)
+  {
+	  std::cout << "I speak. \n";
+  }
+
 };
 
 

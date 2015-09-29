@@ -109,6 +109,7 @@ public:
 
   void          DrinkWhiskey() { m_glassContainer -= 1; }
   bool		    EmptyGlass()const { return (m_glassContainer == 0); }
+  void  Speak(std::string const &str1);
 
 };
 

@@ -1,4 +1,5 @@
 #include "Miner.h"
+#include "EntityNames.h"
 
 bool Miner::HandleMessage(const Telegram& msg)
 {
@@ -46,4 +47,10 @@ bool Miner::Fatigued()const
   }
 
   return false;
+}
+
+void Miner::Speak(std::string const &str1)
+{
+	SetTextColor(FOREGROUND_RED | FOREGROUND_INTENSITY);
+	std::cout << "\n" << GetNameOfEntity(ID()) << ": " << str1;
 }

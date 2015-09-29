@@ -64,13 +64,13 @@ WaitingForCustomer* WaitingForCustomer::Instance()
 void WaitingForCustomer::Enter(Barman* barman)
 {
 	SetTextColor(FOREGROUND_BLUE | FOREGROUND_INTENSITY);
-	cout << "\n" << GetNameOfEntity(barman->ID()) << ": Anybody want to drink ?! I have " << barman->GetBottles() << " bottles for you today !";
+	barman->Speak("Anybody want to drink ?! I have " + std::to_string(barman->GetBottles())+ " bottles for you today !");
 }
 
 
 void WaitingForCustomer::Execute(Barman* barman)
 {
-	cout << "\n" << GetNameOfEntity(barman->ID()) << ": I'm still waiting for customers !";
+	barman->Speak("I'm still waiting for customers !");
 
 	if (barman->NeededBottles())
 	{
@@ -93,13 +93,10 @@ bool WaitingForCustomer::OnMessage(Barman* barman, const Telegram& msg)
 			cout << "\nMessage handled by " << GetNameOfEntity(barman->ID()) << " at time: "
 				<< Clock->GetCurrentTime();
 
-			SetTextColor(FOREGROUND_BLUE | FOREGROUND_INTENSITY);
-
 
 			barman->SetCustomerID(msg.Sender);
 
-			cout << "\n" << GetNameOfEntity(barman->ID()) <<
-				": Hi " << GetNameOfEntity(barman->GetCustomerID()) << " ! I will prepare your drink !";
+			barman->Speak("Hi " + GetNameOfEntity(barman->GetCustomerID()) + " ! I will prepare your drink !");
 			
 			barman->GetFSM()->ChangeState(GiveADrink::Instance());
 			return true;
@@ -122,7 +119,7 @@ GiveADrink* GiveADrink::Instance()
 
 void GiveADrink::Enter(Barman* barman)
 {
-	cout << "\n" << GetNameOfEntity(barman->ID()) << ": I will prepare a drink for " << GetNameOfEntity(barman->GetCustomerID()) << " !";
+	barman->Speak("I will prepare a drink for " + GetNameOfEntity(barman->GetCustomerID()) +" !");
 	barman->SetPrepareDrinkTime(0);
 }
 
@@ -134,16 +131,16 @@ void GiveADrink::Execute(Barman* barman)
 	{
 		case 1:
 		{
-			cout << "\n" << GetNameOfEntity(barman->ID()) << ": Let's grab a bottle !";
+			barman->Speak("Let's grab a bottle !");
 			barman->SellOneBottle();
 		}
 		case 2:
 		{
-			cout << "\n" << GetNameOfEntity(barman->ID()) << ": Pour the alcool into a nice glas !";
+			barman->Speak("Pour the alcool into a nice glass !");
 		}
 		case 3:
 		{
-			cout << "\n" << GetNameOfEntity(barman->ID()) << ": Here we are ! Your glas is ready " << GetNameOfEntity(barman->GetCustomerID()) << " !";
+			barman->Speak("Here we are ! Your glass is ready "+ GetNameOfEntity(barman->GetCustomerID()) + " !");
 
 			Dispatch->DispatchMessage(0,                  //time delay
 				barman->ID(),           //sender ID
@@ -189,7 +186,7 @@ SearchForBottles* SearchForBottles::Instance()
 
 void SearchForBottles::Enter(Barman* barman)
 {
-	cout << "\n" << GetNameOfEntity(barman->ID()) << ": I'm going to find bottles !";
+	barman->Speak("I'm going to find bottles !");
 }
 
 
@@ -198,7 +195,7 @@ void SearchForBottles::Execute(Barman* barman)
 	if (barman->GetBottles() < 3)
 	{
 		barman->IncreaseBottles();
-		cout << "\n" << GetNameOfEntity(barman->ID()) << ": One more bottle !";
+		barman->Speak("One more bottle !");
 	}
 	else
 	{
@@ -208,7 +205,7 @@ void SearchForBottles::Execute(Barman* barman)
 
 void SearchForBottles::Exit(Barman* barman)
 {
-	cout << "\n" << GetNameOfEntity(barman->ID()) << ": That's it for the moment ! I have a lot of bottles and I will come back to the saloon.";
+	barman->Speak("That's it for the moment ! I have a lot of bottles and I will come back to the saloon. ");
 }
 
 bool SearchForBottles::OnMessage(Barman* barman, const Telegram& msg)

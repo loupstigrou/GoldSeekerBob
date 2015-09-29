@@ -46,8 +46,7 @@ void DrunkardGoHomeAndSleepTilRested::Execute(Drunkard* pDrunkard)
 	//if Drunkard is not fatigued go back to the saloon
 	if (!pDrunkard->Fatigued())
 	{
-		cout << "\n" << GetNameOfEntity(pDrunkard->ID()) << ": "
-		<< "All mah fatigue has drained away. Time to go the saloon again!";
+		pDrunkard->Speak("All mah fatigue has drained away. Time to go the saloon again!");
 
 		pDrunkard->GetFSM()->ChangeState(DrunkardGoToSaloon::Instance());
 	}
@@ -57,13 +56,13 @@ void DrunkardGoHomeAndSleepTilRested::Execute(Drunkard* pDrunkard)
 		//sleep
 		pDrunkard->DecreaseFatigue();
 
-		cout << "\n" << GetNameOfEntity(pDrunkard->ID()) << ": " << "ZZZZ... ";
+		pDrunkard->Speak("ZZZZ... ");
 	}
 }
 
 void DrunkardGoHomeAndSleepTilRested::Exit(Drunkard* pDrunkard)
 {
-	cout << "\n" << GetNameOfEntity(pDrunkard->ID()) << ": " << "DrunkardGoHomeAndSleepTilRested Exit";
+	pDrunkard->Speak("DrunkardGoHomeAndSleepTilRested Exit");
 }
 
 
@@ -89,20 +88,20 @@ void DrunkardGoToSaloon::Enter(Drunkard* pDrunkard)
 	{
 		pDrunkard->ChangeLocation(saloon);
 
-		cout << "\n" << GetNameOfEntity(pDrunkard->ID()) << ": " << "Boy, ah sure is thusty! Walking to the saloon";
+		pDrunkard->Speak("Boy, ah sure is thusty! Walking to the saloon");
 	}
 }
 
 void DrunkardGoToSaloon::Execute(Drunkard* pDrunkard)
 {
-	cout << "\n" << GetNameOfEntity(pDrunkard->ID()) << ": " << "DrunkardGoToSaloon Execute";
+	pDrunkard->Speak("DrunkardGoToSaloon Execute");
 	pDrunkard->GetFSM()->ChangeState(DrunkardWaitADrink::Instance());
 }
 
 
 void DrunkardGoToSaloon::Exit(Drunkard* pDrunkard)
 {
-	cout << "\n" << GetNameOfEntity(pDrunkard->ID()) << ": " << "DrunkardGoToSaloon Exit";
+	pDrunkard->Speak("DrunkardGoToSaloon Exit");
 }
 
 
@@ -124,7 +123,7 @@ DrunkardWaitADrink* DrunkardWaitADrink::Instance()
 
 void DrunkardWaitADrink::Enter(Drunkard* pDrunkard)
 {
-	cout << "\n" << GetNameOfEntity(pDrunkard->ID()) << ": " << "I'm thirsty ! Barman, I want a drink !";
+	pDrunkard->Speak("I'm thirsty ! Barman, I want a drink !");
 	Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY,	//time delay
 		pDrunkard->ID(),			//sender ID
 		ent_Barman,					//receiver ID
@@ -134,14 +133,13 @@ void DrunkardWaitADrink::Enter(Drunkard* pDrunkard)
 
 void DrunkardWaitADrink::Execute(Drunkard* pDrunkard)
 {
-	cout << "\n" << GetNameOfEntity(pDrunkard->ID()) << ": " << "I'm waiting my drink.";
+	pDrunkard->Speak("I'm waiting my drink.");
 
 }
 
 void DrunkardWaitADrink::Exit(Drunkard* pDrunkard)
 {
-	cout << "\n" << GetNameOfEntity(pDrunkard->ID()) << ": " << "Thanks for the drink !";
-	cout << "\n" << GetNameOfEntity(pDrunkard->ID()) << ": " << "I shall drink that's mighty fine sippin' liquer";
+	pDrunkard->Speak("Thanks for the drink !");
 
 }
 
@@ -159,7 +157,6 @@ bool DrunkardWaitADrink::OnMessage(Drunkard* pDrunkard, const Telegram& msg)
 		cout << "\n\nMessage Msg_DrinkReady (" << msg.Msg << ") handled by " << GetNameOfEntity(pDrunkard->ID()) << " send by " << GetNameOfEntity(msg.Sender) << " at time :  "
 			<< Clock->GetCurrentTime() << "\n";
 
-		SetTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 
 		pDrunkard->GetFSM()->ChangeState(DrunkardDrinkAGlass::Instance());
 		return true;
@@ -168,8 +165,6 @@ bool DrunkardWaitADrink::OnMessage(Drunkard* pDrunkard, const Telegram& msg)
 	{
 		cout << "\n\nMessage Msg_MinerAskTable (" << msg.Msg << ") handled by " << GetNameOfEntity(pDrunkard->ID()) << " send by " << GetNameOfEntity(msg.Sender) << " at time :  "
 			<< Clock->GetCurrentTime() << "\n";
-
-		SetTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 
 		if (pDrunkard->IsDrunk())
 		{
@@ -193,8 +188,7 @@ bool DrunkardWaitADrink::OnMessage(Drunkard* pDrunkard, const Telegram& msg)
 	}
 	case Msg_ImBusy:
 	{
-		SetTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
-		cout << "\n" << GetNameOfEntity(pDrunkard->ID()) << ": " << "I'm very thirsty :( Barman, I want a drink !";
+		pDrunkard->Speak("I'm very thirsty :( Barman, I want a drink !");
 		Dispatch->DispatchMessage(0.5, //time delay
 			pDrunkard->ID(),           //sender ID
 			ent_Barman,  //receiver ID
@@ -218,14 +212,13 @@ DrunkardDrinkAGlass* DrunkardDrinkAGlass::Instance()
 
 void DrunkardDrinkAGlass::Enter(Drunkard* pDrunkard)
 {
-	cout << "\n" << GetNameOfEntity(pDrunkard->ID()) << ": " << "DrunkardDrinkAGlass Enter";
+	pDrunkard->Speak("I will start to drink");
 	pDrunkard->SetNewDrink();
 }
 
 void DrunkardDrinkAGlass::Execute(Drunkard* pDrunkard)
 {
-	cout << "\n" << GetNameOfEntity(pDrunkard->ID()) << ": " << "DrunkardDrinkAGlass Execute";
-	//cout << "\n" "That's a fine drink that I drink here !";
+	pDrunkard->Speak("That's a fine drink that I drink here !");
 
 	if (pDrunkard->EmptyGlass())
 		pDrunkard->GetFSM()->ChangeState(DrunkardWaitADrink::Instance());
@@ -235,7 +228,7 @@ void DrunkardDrinkAGlass::Execute(Drunkard* pDrunkard)
 
 void DrunkardDrinkAGlass::Exit(Drunkard* pDrunkard)
 {
-	cout << "\n" << GetNameOfEntity(pDrunkard->ID()) << ": " << "DrunkardDrinkAGlass Exit";
+	pDrunkard->Speak("Oh f*ck ! My glass is already empty !");
 }
 
 
@@ -253,8 +246,6 @@ bool DrunkardDrinkAGlass::OnMessage(Drunkard* pDrunkard, const Telegram& msg)
 		{
 			cout << "\n\nMessage Msg_MinerAskTable (" << msg.Msg << ") handled by " << GetNameOfEntity(pDrunkard->ID()) << " send by " << GetNameOfEntity(msg.Sender) << " at time :  "
 				<< Clock->GetCurrentTime() << "\n";
-
-			SetTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 
 			if (pDrunkard->IsDrunk())
 			{
@@ -293,28 +284,29 @@ DrunkardFightWithMiner* DrunkardFightWithMiner::Instance()
 
 void DrunkardFightWithMiner::Enter(Drunkard* pDrunkard)
 {
-	cout << "\n" << GetNameOfEntity(pDrunkard->ID()) << ": " << "DrunkardFightWithMiner Enter";
-	//
+	pDrunkard->Speak("DrunkardFightWithMiner Enter");
 }
 
 void DrunkardFightWithMiner::Execute(Drunkard* pDrunkard)
 {
-	cout << "\n" << GetNameOfEntity(pDrunkard->ID()) << ": " << "DrunkardFightWithMiner Execute";
+	pDrunkard->Speak("DrunkardFightWithMiner Execute");
 
 	pDrunkard->IncreaseFatigue();
 	if (pDrunkard->Fatigued())
 	{
 		Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY,
 			pDrunkard->ID(),
-			pDrunkard->ID(),
-			Msg_Fatigued,
+			ent_Miner_Bob,
+			Msg_StopFight,
 			NO_ADDITIONAL_INFO);
+
+		pDrunkard->GetFSM()->ChangeState(DrunkardGoHomeAndSleepTilRested::Instance());
 	}
 }
 
 void DrunkardFightWithMiner::Exit(Drunkard* pDrunkard)
 {
-	cout << "\n" << GetNameOfEntity(pDrunkard->ID()) << ": " << "DrunkardFightWithMiner Exit";
+	pDrunkard->Speak("DrunkardFightWithMiner Exit");
 }
 
 
@@ -324,28 +316,10 @@ bool DrunkardFightWithMiner::OnMessage(Drunkard* pDrunkard, const Telegram& msg)
 
 	switch (msg.Msg)
 	{
-	case Msg_Fatigued:
-	{
-		cout << "\nMessage handled by " << GetNameOfEntity(pDrunkard->ID()) << " at time: "
-			<< Clock->GetCurrentTime();
-
-		SetTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
-
-		Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY,
-			pDrunkard->ID(),
-			ent_Miner_Bob,
-			Msg_StopFight,
-			NO_ADDITIONAL_INFO);
-
-		pDrunkard->GetFSM()->ChangeState(DrunkardGoHomeAndSleepTilRested::Instance());
-		return true;
-	}
 	case Msg_StopFight:
 	{
 		cout << "\nMessage handled by " << GetNameOfEntity(pDrunkard->ID()) << " at time: "
 			<< Clock->GetCurrentTime();
-
-		SetTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 
 		pDrunkard->GetFSM()->ChangeState(DrunkardWaitADrink::Instance());
 		return true;
