@@ -26,7 +26,7 @@ struct Telegram;
 const int TirednessThresholdDrunkard = 5;
 
 //above this value the Drunkard is drunk
-const int DrunknessThresholdDrunkard = 5;
+const int DrunknessThresholdDrunkard = 6;
 
 //number of sip in a drink
 const int GlassContainedSips = 3;

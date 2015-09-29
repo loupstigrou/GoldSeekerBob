@@ -168,14 +168,7 @@ bool DrunkardWaitADrink::OnMessage(Drunkard* pDrunkard, const Telegram& msg)
 
 		if (pDrunkard->IsDrunk())
 		{
-			Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY,
-				pDrunkard->ID(),
-				msg.Sender,
-				Msg_DrunkardAccepts,
-				NO_ADDITIONAL_INFO);
-		}
-		else
-		{
+			pDrunkard->Speak("LEAVE ME ALONE, I'M DRUNK !!!");
 			Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY,
 				pDrunkard->ID(),
 				msg.Sender,
@@ -183,6 +176,15 @@ bool DrunkardWaitADrink::OnMessage(Drunkard* pDrunkard, const Telegram& msg)
 				NO_ADDITIONAL_INFO);
 
 			pDrunkard->GetFSM()->ChangeState(DrunkardFightWithMiner::Instance());
+		}
+		else
+		{
+			Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY,
+				pDrunkard->ID(),
+				msg.Sender,
+				Msg_DrunkardAccepts,
+				NO_ADDITIONAL_INFO);
+
 		}
 		return true;
 	}
@@ -218,7 +220,10 @@ void DrunkardDrinkAGlass::Enter(Drunkard* pDrunkard)
 
 void DrunkardDrinkAGlass::Execute(Drunkard* pDrunkard)
 {
-	pDrunkard->Speak("That's a fine drink that I drink here !");
+	if (pDrunkard->IsDrunk())
+		pDrunkard->Speak("Thaaaat's a fi..fine driiiink ... BURP... I... !");
+	else
+		pDrunkard->Speak("That's a fine drink that I drink here !");
 
 	if (pDrunkard->EmptyGlass())
 		pDrunkard->GetFSM()->ChangeState(DrunkardWaitADrink::Instance());
@@ -249,21 +254,21 @@ bool DrunkardDrinkAGlass::OnMessage(Drunkard* pDrunkard, const Telegram& msg)
 
 			if (pDrunkard->IsDrunk())
 			{
+				pDrunkard->Speak("LEAVE ME ALONE, I'M DRUNK !!!");
 				Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY,
 					pDrunkard->ID(),
 					msg.Sender,
-					Msg_DrunkardAccepts,
+					Msg_DrunkardRefusesAndWantToFight,
 					NO_ADDITIONAL_INFO);
+				pDrunkard->GetFSM()->ChangeState(DrunkardFightWithMiner::Instance());
 			}
 			else
 			{
 				Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY,
 					pDrunkard->ID(),
 					msg.Sender,
-					Msg_DrunkardRefusesAndWantToFight,
+					Msg_DrunkardAccepts,
 					NO_ADDITIONAL_INFO);
-
-				pDrunkard->GetFSM()->ChangeState(DrunkardFightWithMiner::Instance());
 			}
 		}
 		return true;
