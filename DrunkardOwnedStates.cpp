@@ -62,7 +62,7 @@ void DrunkardGoHomeAndSleepTilRested::Execute(Drunkard* pDrunkard)
 
 void DrunkardGoHomeAndSleepTilRested::Exit(Drunkard* pDrunkard)
 {
-	pDrunkard->Speak("DrunkardGoHomeAndSleepTilRested Exit");
+	pDrunkard->Speak("What a beautiful new day !");
 }
 
 
@@ -94,14 +94,14 @@ void DrunkardGoToSaloon::Enter(Drunkard* pDrunkard)
 
 void DrunkardGoToSaloon::Execute(Drunkard* pDrunkard)
 {
-	pDrunkard->Speak("DrunkardGoToSaloon Execute");
+	pDrunkard->Speak("I'm walking to the saloon");
 	pDrunkard->GetFSM()->ChangeState(DrunkardWaitADrink::Instance());
 }
 
 
 void DrunkardGoToSaloon::Exit(Drunkard* pDrunkard)
 {
-	pDrunkard->Speak("DrunkardGoToSaloon Exit");
+	pDrunkard->Speak("I arrived in the saloon");
 }
 
 
@@ -289,12 +289,12 @@ DrunkardFightWithMiner* DrunkardFightWithMiner::Instance()
 
 void DrunkardFightWithMiner::Enter(Drunkard* pDrunkard)
 {
-	pDrunkard->Speak("DrunkardFightWithMiner Enter");
+	pDrunkard->Speak("I WILL KILL YOU !!!! ");
 }
 
 void DrunkardFightWithMiner::Execute(Drunkard* pDrunkard)
 {
-	pDrunkard->Speak("DrunkardFightWithMiner Execute");
+	pDrunkard->Speak("*BIM!!*");
 
 	pDrunkard->IncreaseFatigue();
 	if (pDrunkard->Fatigued())
@@ -311,7 +311,7 @@ void DrunkardFightWithMiner::Execute(Drunkard* pDrunkard)
 
 void DrunkardFightWithMiner::Exit(Drunkard* pDrunkard)
 {
-	pDrunkard->Speak("DrunkardFightWithMiner Exit");
+	pDrunkard->Speak("Oh god, I can't fight anymore..");
 }
 
 

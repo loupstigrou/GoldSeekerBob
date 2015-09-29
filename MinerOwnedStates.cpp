@@ -460,12 +460,12 @@ MinerFightWithDrunkard* MinerFightWithDrunkard::Instance()
 
 void MinerFightWithDrunkard::Enter(Miner* pMiner)
 {
-	pMiner->Speak("MinerFightWithDrunkard Enter");
+	pMiner->Speak("I will hurt you !");
 }
 
 void MinerFightWithDrunkard::Execute(Miner* pMiner)
 {
-	pMiner->Speak("MinerFightWithDrunkard Execute");
+	pMiner->Speak("*PAF !!*");
 
 	pMiner->IncreaseFatigue();
 	if (pMiner->Fatigued())
@@ -482,7 +482,7 @@ void MinerFightWithDrunkard::Execute(Miner* pMiner)
 
 void MinerFightWithDrunkard::Exit(Miner* pMiner)
 {
-	pMiner->Speak("MinerFightWithDrunkard Exit");
+	pMiner->Speak("I'm so tired.. I can't fight");
 }
 
 
