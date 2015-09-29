@@ -92,6 +92,7 @@ bool WaitingForCustomer::OnMessage(Barman* barman, const Telegram& msg)
 				": Hi " << GetNameOfEntity(barman->GetCustomerID()) << " ! I will prepare your drink !";
 			
 			barman->GetFSM()->ChangeState(GiveADrink::Instance());
+			return true;
 		}
 	}
 

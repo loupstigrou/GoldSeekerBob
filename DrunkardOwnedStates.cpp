@@ -155,6 +155,7 @@ extern std::ofstream os;
 //		SetTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 //
 //		pDrunkard->GetFSM()->ChangeState(Drink::Instance());
+//		return true;
 //	}
 //	case Msg_FightMaggot:
 //	{
@@ -163,6 +164,7 @@ extern std::ofstream os;
 //
 //		SetTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 //		pDrunkard->GetFSM()->ChangeState(FightWithDrunkard::Instance());
+//		return true;
 //	}
 //	}
 //	return false;
@@ -213,6 +215,7 @@ extern std::ofstream os;
 //		SetTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 //
 //		pDrunkard->GetFSM()->ChangeState(DrinkAGlass::Instance());
+//		return true;
 //	}
 //	case Msg_FightMaggot:
 //	{
@@ -221,6 +224,7 @@ extern std::ofstream os;
 //
 //		SetTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 //		pDrunkard->GetFSM()->ChangeState(FightWithMiner::Instance());
+//		return true;
 //	}
 //	}
 //	return false;
