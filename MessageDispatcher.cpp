@@ -40,7 +40,7 @@ void MessageDispatcher::Discharge(BaseGameEntity* pReceiver,
   {
     //telegram could not be handled
 	  cout << "\n\nWARNING : Message not handled\n" << GetNameOfEntity(telegram.Sender) << " -> " << GetNameOfEntity(telegram.Receiver)
-		   << " : " << telegram.Msg << ". Msg is " << MsgToStr(telegram.Msg)<< "\n\n";
+		   << " : " << telegram.Msg << ". Msg is " << MsgToStr(telegram.Msg)<< "\n\n"; // 
   }
 }
 
