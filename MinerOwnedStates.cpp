@@ -32,7 +32,6 @@ void EnterMineAndDigForNugget::Enter(Miner* pMiner)
 {
   //if the miner is not already located at the goldmine, he must
   //change location to the gold mine
-	pMiner->Speak("COUCOU LOL");
   if (pMiner->Location() != goldmine)
   {
 	  pMiner->Speak("Walkin' to the goldmine");
