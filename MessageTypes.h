@@ -5,10 +5,11 @@
 
 enum message_type
 {
-  Msg_HiHoneyImHome,
-  Msg_StewReady,
-  Msg_GiveMeADrink,
-  Msg_DrinkReady
+	Msg_HiHoneyImHome,
+	Msg_StewReady,
+	Msg_GiveMeADrink,
+	Msg_DrinkReady,
+	Msg_FightMaggot
 };
 
 
@@ -30,6 +31,9 @@ inline std::string MsgToStr(int msg)
   case 3:
 
 	  return "DrinkReady";
+  case 4:
+
+	  return "FightMaggot";
 
   default:
 

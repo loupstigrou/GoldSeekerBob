@@ -2,7 +2,7 @@
 #define BARMAN_H
 //------------------------------------------------------------------------
 //
-//  Name: Soulard.h
+//  Name: Drunkard.h
 //
 //  Desc: class to implement the barman.
 //

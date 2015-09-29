@@ -83,7 +83,7 @@ bool WaitingForCustomer::OnMessage(Barman* barman, const Telegram& msg)
 			cout << "\nMessage handled by " << GetNameOfEntity(barman->ID()) << " at time: "
 				<< Clock->GetCurrentTime();
 
-			SetTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+			SetTextColor(FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 
 
 			barman->SetCustomerID(msg.Sender);
@@ -134,7 +134,7 @@ void GiveADrink::Execute(Barman* barman)
 		{
 			cout << "\n" << GetNameOfEntity(barman->ID()) << ": Here we are ! Your glas is ready " << GetNameOfEntity(barman->GetCustomerID()) << " !";
 
-			Dispatch->DispatchMessage(1.1,                  //time delay
+			Dispatch->DispatchMessage(0,                  //time delay
 				barman->ID(),           //sender ID
 				barman->GetCustomerID(),           //receiver ID
 				Msg_DrinkReady,        //msg

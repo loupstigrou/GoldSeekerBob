@@ -61,7 +61,7 @@ void EnterMineAndDigForNugget::Execute(Miner* pMiner)
 
   if (pMiner->Thirsty())
   {
-    pMiner->GetFSM()->ChangeState(QuenchThirst::Instance());
+    pMiner->GetFSM()->ChangeState(GoToSaloon::Instance());
   }
 }
 
@@ -214,16 +214,16 @@ bool GoHomeAndSleepTilRested::OnMessage(Miner* pMiner, const Telegram& msg)
    return false; //send message to global message handler
 }
 
-//------------------------------------------------------------------------QuenchThirst
+//------------------------------------------------------------------------GoToSaloon
 
-QuenchThirst* QuenchThirst::Instance()
+GoToSaloon* GoToSaloon::Instance()
 {
-  static QuenchThirst instance;
+  static GoToSaloon instance;
 
   return &instance;
 }
 
-void QuenchThirst::Enter(Miner* pMiner)
+void GoToSaloon::Enter(Miner* pMiner)
 {
   if (pMiner->Location() != saloon)
   {    
@@ -233,25 +233,18 @@ void QuenchThirst::Enter(Miner* pMiner)
   }
 }
 
-void QuenchThirst::Execute(Miner* pMiner)
+void GoToSaloon::Execute(Miner* pMiner)
 {
-  /*pMiner->BuyAndDrinkAWhiskey();
-
-  cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "That's mighty fine sippin' liquer";
-  
-  pMiner->GetFSM()->ChangeState(EnterMineAndDigForNugget::Instance());  */
-
-	pMiner->GetFSM()->ChangeState(WaitADrink::Instance());
+  	pMiner->GetFSM()->ChangeState(WaitADrink::Instance());
 }
 
 
-void QuenchThirst::Exit(Miner* pMiner)
+void GoToSaloon::Exit(Miner* pMiner)
 { 
-  //cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "Leaving the saloon, feelin' good";
 }
 
 
-bool QuenchThirst::OnMessage(Miner* pMiner, const Telegram& msg)
+bool GoToSaloon::OnMessage(Miner* pMiner, const Telegram& msg)
 {
   //send msg to global message handler
   return false;
@@ -292,7 +285,7 @@ bool EatStew::OnMessage(Miner* pMiner, const Telegram& msg)
 }
 
 
-//------------------------------------------------------------------------EatStew
+//------------------------------------------------------------------------WaitADrink
 
 WaitADrink* WaitADrink::Instance()
 {
@@ -341,6 +334,14 @@ bool WaitADrink::OnMessage(Miner* pMiner, const Telegram& msg)
 			SetTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 
 			pMiner->GetFSM()->ChangeState(EnterMineAndDigForNugget::Instance());
+		}
+		case Msg_FightMaggot:
+		{
+			cout << "\nMessage handled by " << GetNameOfEntity(pMiner->ID()) << " at time: "
+				<< Clock->GetCurrentTime();
+
+			SetTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+			//pMiner->GetFSM()->ChangeState(FightWithDrunkard::Instance());
 		}
 	}
 	return false;
