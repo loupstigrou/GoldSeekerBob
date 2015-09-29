@@ -39,3 +39,13 @@ bool Drunkard::Fatigued()const
 
 	return false;
 }
+
+bool Drunkard::IsDrunk()const
+{
+	return m_drunkness >= DrunknessThresholdDrunkard;
+}
+
+bool Drunkard::EmptyGlass()const
+{
+	return m_glassContainer < 1;
+}

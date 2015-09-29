@@ -230,6 +230,85 @@ public:
 
 	virtual bool OnMessage(Miner* agent, const Telegram& msg);
 };
+class MinerEatStew : public State<Miner>
+{
+private:
 
+	MinerEatStew() {}
+
+	//copy ctor and assignment should be private
+	MinerEatStew(const MinerEatStew&);
+	MinerEatStew& operator=(const MinerEatStew&);
+
+public:
+
+	//this is a singleton
+	static MinerEatStew* Instance();
+
+	virtual void Enter(Miner* miner);
+
+	virtual void Execute(Miner* miner);
+
+	virtual void Exit(Miner* miner);
+
+	virtual bool OnMessage(Miner* agent, const Telegram& msg);
+};
+
+//------------------------------------------------------------------------
+//
+//  DrinkAGlass
+//------------------------------------------------------------------------
+class MinerDrinkAGlass : public State<Miner>
+{
+private:
+
+	MinerDrinkAGlass() {}
+
+	//copy ctor and assignment should be private
+	MinerDrinkAGlass(const MinerDrinkAGlass&);
+	MinerDrinkAGlass& operator=(const MinerDrinkAGlass&);
+
+public:
+
+	//this is a singleton
+	static MinerDrinkAGlass* Instance();
+
+	virtual void Enter(Miner* miner);
+
+	virtual void Execute(Miner* miner);
+
+	virtual void Exit(Miner* miner);
+
+	virtual bool OnMessage(Miner* agent, const Telegram& msg);
+};
+
+
+//------------------------------------------------------------------------
+//
+//  Fight with the drunkard
+//------------------------------------------------------------------------
+class MinerFightWithDrunkard : public State<Miner>
+{
+private:
+
+	MinerFightWithDrunkard() {}
+
+	//copy ctor and assignment should be private
+	MinerFightWithDrunkard(const MinerFightWithDrunkard&);
+	MinerFightWithDrunkard& operator=(const MinerFightWithDrunkard&);
+
+public:
+
+	//this is a singleton
+	static MinerFightWithDrunkard* Instance();
+
+	virtual void Enter(Miner* miner);
+
+	virtual void Execute(Miner* miner);
+
+	virtual void Exit(Miner* miner);
+
+	virtual bool OnMessage(Miner* agent, const Telegram& msg);
+};
 
 #endif

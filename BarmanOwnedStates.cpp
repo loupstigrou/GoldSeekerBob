@@ -37,6 +37,15 @@ bool BarmanGlobalState::OnMessage(Barman* barman, const Telegram& msg)
 }
 
 
+void BarmanGlobalState::DisplayBusyMessage(Barman* barman, const Telegram& msg)
+{
+	Dispatch->DispatchMessage(0.5, //time delay
+		barman->ID(),           //sender ID
+		msg.Sender,           //receiver ID
+		Msg_ImBusy,        //msg
+		NO_ADDITIONAL_INFO);
+}
+
 
 
 
@@ -54,6 +63,7 @@ WaitingForCustomer* WaitingForCustomer::Instance()
 
 void WaitingForCustomer::Enter(Barman* barman)
 {
+	SetTextColor(FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 	cout << "\n" << GetNameOfEntity(barman->ID()) << ": Anybody want to drink ?! I have " << barman->GetBottles() << " bottles for you today !";
 }
 
@@ -163,7 +173,8 @@ void GiveADrink::Exit(Barman* barman)
 
 bool GiveADrink::OnMessage(Barman* barman, const Telegram& msg)
 {
-	return false;
+	BarmanGlobalState::Instance()->DisplayBusyMessage(barman, msg);
+	return true;
 }
 
 //-------------------------------------------------------------------------SearchForBottles
@@ -202,5 +213,6 @@ void SearchForBottles::Exit(Barman* barman)
 
 bool SearchForBottles::OnMessage(Barman* barman, const Telegram& msg)
 {
-	return false;
+	BarmanGlobalState::Instance()->DisplayBusyMessage(barman, msg);
+	return true;
 }

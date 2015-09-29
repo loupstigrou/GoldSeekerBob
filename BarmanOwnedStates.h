@@ -30,6 +30,8 @@ public:
 	virtual void Exit(Barman* barman) {}
 
 	virtual bool OnMessage(Barman* barman, const Telegram& msg);
+
+	virtual void DisplayBusyMessage(Barman* barman, const Telegram& msg);
 };
 //------------------------------------------------------------------------
 //

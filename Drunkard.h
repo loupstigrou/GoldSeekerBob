@@ -63,7 +63,7 @@ public:
 		//set up the state machine
 		m_pStateMachine = new StateMachine<Drunkard>(this);
 
-//		m_pStateMachine->SetCurrentState(GoHomeAndSleepTilRested::Instance());
+		m_pStateMachine->SetCurrentState(DrunkardGoToSaloon::Instance());
 
 	}
 
@@ -79,16 +79,19 @@ public:
 	StateMachine<Drunkard>* GetFSM()const { return m_pStateMachine; }
 
 	//-------------------------------------------------------------accessors
-	location_type Location()const{ return m_Location; }
-	void          ChangeLocation(location_type loc){ m_Location = loc; }
+	location_type Location()const { return m_Location; }
+	void          ChangeLocation(location_type loc) { m_Location = loc; }
 
 	bool          Fatigued()const;
-	void          DecreaseFatigue(){ m_iFatigue -= 1; }
+	void          DecreaseFatigue() { m_iFatigue -= 1; }
+	void          IncreaseFatigue() { m_iFatigue += 1; }
 
-	void          DrinkWhiskey(){ m_drunkness += 1; m_glassContainer -= 1; m_iFatigue += 1; }
+	void          DrinkWhiskey() { m_drunkness += 1; m_glassContainer -= 1; m_iFatigue += 1; }
 
-	bool		  EmptyGlass()const{}
-	void          SetNewDrink(){  m_glassContainer = 3; }
+	bool		  EmptyGlass()const;
+	void          SetNewDrink() { m_glassContainer = 3; }
+
+	bool          IsDrunk()const;
 
 };
 

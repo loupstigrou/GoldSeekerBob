@@ -307,11 +307,14 @@ void WaitADrink::Enter(Miner* pMiner)
 
 void WaitADrink::Execute(Miner* pMiner)
 {
+	SetTextColor(FOREGROUND_RED | FOREGROUND_INTENSITY);
 	cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "I'm waiting my drink.";
+	
 }
 
 void WaitADrink::Exit(Miner* pMiner)
 {
+	SetTextColor(FOREGROUND_RED | FOREGROUND_INTENSITY);
 	cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "Thanks for the drink !";
 	pMiner->BuyAndDrinkAWhiskey();
 
@@ -323,28 +326,176 @@ void WaitADrink::Exit(Miner* pMiner)
 bool WaitADrink::OnMessage(Miner* pMiner, const Telegram& msg)
 {
 	SetTextColor(BACKGROUND_RED | FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+	cout << "\nMessage handled by " << GetNameOfEntity(pMiner->ID()) << " at time: "
+		<< Clock->GetCurrentTime();
 
 	switch (msg.Msg)
 	{
 		case Msg_DrinkReady:
 		{
-			cout << "\nMessage handled by " << GetNameOfEntity(pMiner->ID()) << " at time: "
-				<< Clock->GetCurrentTime();
-
 			SetTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 
 			pMiner->GetFSM()->ChangeState(EnterMineAndDigForNugget::Instance());
+			return true;
 		}
 		case Msg_FightMaggot:
 		{
-			cout << "\nMessage handled by " << GetNameOfEntity(pMiner->ID()) << " at time: "
-				<< Clock->GetCurrentTime();
-
 			SetTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
-			//pMiner->GetFSM()->ChangeState(FightWithDrunkard::Instance());
+			pMiner->GetFSM()->ChangeState(MinerFightWithDrunkard::Instance());
+			return true;
+		}
+		case Msg_ImBusy:
+		{
+			SetTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+			cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "I'm very thirsty :( Barman, I want a drink !";
+			Dispatch->DispatchMessage(0.5, //time delay
+				pMiner->ID(),           //sender ID
+				ent_Barman,  //receiver ID
+				Msg_GiveMeADrink,        //msg
+				NO_ADDITIONAL_INFO);
+			return true;
 		}
 	}
 	return false;
 }
 
 
+//------------------------------------------------------------------------MinerDrinkAGlass
+
+MinerDrinkAGlass* MinerDrinkAGlass::Instance()
+{
+	static MinerDrinkAGlass instance;
+
+	return &instance;
+}
+
+
+void MinerDrinkAGlass::Enter(Miner* pMiner)
+{
+	cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "MinerDrinkAGlass Enter";
+
+	pMiner->BuyAndDrinkAWhiskey();
+
+	Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY, //time delay
+		pMiner->ID(),           //sender ID
+		ent_Drunkard,  //receiver ID
+		Msg_MinerAskTable,        //msg
+		NO_ADDITIONAL_INFO);
+}
+
+void MinerDrinkAGlass::Execute(Miner* pMiner)
+{
+	cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "MinerDrinkAGlass Execute";
+	//cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "I'm waiting my drink.";
+
+	pMiner->DrinkWhiskey();
+}
+
+void MinerDrinkAGlass::Exit(Miner* pMiner)
+{
+	cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "MinerDrinkAGlass Exit";
+	//cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "Thanks for the drink !";
+	//cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "That's mighty fine sippin' liquer";
+
+}
+
+
+bool MinerDrinkAGlass::OnMessage(Miner* pMiner, const Telegram& msg)
+{
+	SetTextColor(BACKGROUND_RED | FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+
+	switch (msg.Msg)
+	{
+	case Msg_DrunkardAccepts:
+	{
+		cout << "\nMessage handled by " << GetNameOfEntity(pMiner->ID()) << " at time: "
+			<< Clock->GetCurrentTime();
+
+		SetTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+	}
+	case Msg_DrunkardRefusesAndWantToFight:
+	{
+		cout << "\nMessage handled by " << GetNameOfEntity(pMiner->ID()) << " at time: "
+			<< Clock->GetCurrentTime();
+
+		SetTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+
+		pMiner->GetFSM()->ChangeState(MinerFightWithDrunkard::Instance());
+	}
+	}
+	return false;
+}
+
+//------------------------------------------------------------------------MinerFightWithDrunkard
+
+MinerFightWithDrunkard* MinerFightWithDrunkard::Instance()
+{
+	static MinerFightWithDrunkard instance;
+
+	return &instance;
+}
+
+
+void MinerFightWithDrunkard::Enter(Miner* pMiner)
+{
+	cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "MinerFightWithDrunkard Enter";
+	//
+}
+
+void MinerFightWithDrunkard::Execute(Miner* pMiner)
+{
+	cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "MinerFightWithDrunkard Execute";
+
+	pMiner->IncreaseFatigue();
+	if (pMiner->Fatigued())
+	{
+		Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY,
+			pMiner->ID(),
+			pMiner->ID(),
+			Msg_Fatigued,
+			NO_ADDITIONAL_INFO);
+	}
+}
+
+void MinerFightWithDrunkard::Exit(Miner* pMiner)
+{
+	cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "MinerFightWithDrunkard Exit";
+	//
+}
+
+
+bool MinerFightWithDrunkard::OnMessage(Miner* pMiner, const Telegram& msg)
+{
+	SetTextColor(BACKGROUND_RED | FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+
+	switch (msg.Msg)
+	{
+	case Msg_Fatigued:
+	{
+		cout << "\nMessage handled by " << GetNameOfEntity(pMiner->ID()) << " at time: "
+			<< Clock->GetCurrentTime();
+
+		SetTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+
+		Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY,
+			pMiner->ID(),
+			ent_Drunkard,
+			Msg_StopFight,
+			NO_ADDITIONAL_INFO);
+
+		pMiner->GetFSM()->ChangeState(GoHomeAndSleepTilRested::Instance());
+		return true;
+	}
+	case Msg_StopFight:
+	{
+		cout << "\nMessage handled by " << GetNameOfEntity(pMiner->ID()) << " at time: "
+			<< Clock->GetCurrentTime();
+
+		SetTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+
+		pMiner->GetFSM()->ChangeState(WaitADrink::Instance());
+		return true;
+	}
+	}
+	return false;
+}

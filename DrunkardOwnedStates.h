@@ -50,133 +50,133 @@ public:
 //  Drunkard will go home and sleep until his fatigue is decreased
 //  sufficiently
 //------------------------------------------------------------------------
-//class GoHomeAndSleepTilRested : public State<Drunkard>
-//{
-//private:
-//
-//	GoHomeAndSleepTilRested(){}
-//
-//	//copy ctor and assignment should be private
-//	GoHomeAndSleepTilRested(const GoHomeAndSleepTilRested&);
-//	GoHomeAndSleepTilRested& operator=(const GoHomeAndSleepTilRested&);
-//
-//public:
-//
-//	//this is a singleton
-//	static GoHomeAndSleepTilRested* Instance();
-//
-//	virtual void Enter(Drunkard* drunkard);
-//
-//	virtual void Execute(Drunkard* drunkard);
-//
-//	virtual void Exit(Drunkard* drunkard);
-//
-//	virtual bool OnMessage(Drunkard* agent, const Telegram& msg);
-//};
+class DrunkardGoHomeAndSleepTilRested : public State<Drunkard>
+{
+private:
+
+	DrunkardGoHomeAndSleepTilRested() {}
+
+	//copy ctor and assignment should be private
+	DrunkardGoHomeAndSleepTilRested(const DrunkardGoHomeAndSleepTilRested&);
+	DrunkardGoHomeAndSleepTilRested& operator=(const DrunkardGoHomeAndSleepTilRested&);
+
+public:
+
+	//this is a singleton
+	static DrunkardGoHomeAndSleepTilRested* Instance();
+
+	virtual void Enter(Drunkard* drunkard);
+
+	virtual void Execute(Drunkard* drunkard);
+
+	virtual void Exit(Drunkard* drunkard);
+
+	virtual bool OnMessage(Drunkard* agent, const Telegram& msg);
+};
 
 // ------------------------------------------------------------------------
 //
 //  Drunkard changes location to the saloon and keeps buying Whiskey until
 //  he is dead drunk.
 //------------------------------------------------------------------------
-//class GoToSaloon : public State<Drunkard>
-//{
-//private:
-//
-//	GoToSaloon(){}
-//
-//	//copy ctor and assignment should be private
-//	GoToSaloon(const GoToSaloon&);
-//	GoToSaloon& operator=(const GoToSaloon&);
-//
-//public:
-//
-//	//this is a singleton
-//	static GoToSaloon* Instance();
-//
-//	virtual void Enter(Drunkard* drunkard);
-//
-//	virtual void Execute(Drunkard* drunkard);
-//
-//	virtual void Exit(Drunkard* drunkard);
-//
-//	virtual bool OnMessage(Drunkard* agent, const Telegram& msg);
-//};
+class DrunkardGoToSaloon : public State<Drunkard>
+{
+private:
+
+	DrunkardGoToSaloon() {}
+
+	//copy ctor and assignment should be private
+	DrunkardGoToSaloon(const DrunkardGoToSaloon&);
+	DrunkardGoToSaloon& operator=(const DrunkardGoToSaloon&);
+
+public:
+
+	//this is a singleton
+	static DrunkardGoToSaloon* Instance();
+
+	virtual void Enter(Drunkard* drunkard);
+
+	virtual void Execute(Drunkard* drunkard);
+
+	virtual void Exit(Drunkard* drunkard);
+
+	virtual bool OnMessage(Drunkard* agent, const Telegram& msg);
+};
 
 //------------------------------------------------------------------------
 //
 //  wait until the barman give the drink
 //------------------------------------------------------------------------
-//class WaitADrink : public State<Drunkard>
-//{
-//private:
-//
-//	WaitADrink() {}
-//
-//	//copy ctor and assignment should be private
-//	WaitADrink(const WaitADrink&);
-//	WaitADrink& operator=(const WaitADrink&);
-//
-//public:
-//
-//	//this is a singleton
-//	static WaitADrink* Instance();
-//
-//	virtual void Enter(Drunkard* drunkard);
-//
-//	virtual void Execute(Drunkard* drunkard);
-//
-//	virtual void Exit(Drunkard* drunkard);
-//
-//	virtual bool OnMessage(Drunkard* agent, const Telegram& msg);
-//};
+class DrunkardWaitADrink : public State<Drunkard>
+{
+private:
+
+	DrunkardWaitADrink() {}
+
+	//copy ctor and assignment should be private
+	DrunkardWaitADrink(const DrunkardWaitADrink&);
+	DrunkardWaitADrink& operator=(const DrunkardWaitADrink&);
+
+public:
+
+	//this is a singleton
+	static DrunkardWaitADrink* Instance();
+
+	virtual void Enter(Drunkard* drunkard);
+
+	virtual void Execute(Drunkard* drunkard);
+
+	virtual void Exit(Drunkard* drunkard);
+
+	virtual bool OnMessage(Drunkard* agent, const Telegram& msg);
+};
 
 //------------------------------------------------------------------------
 //
 //  Drink his glass
 //------------------------------------------------------------------------
-//class DrinkAGlass : public State<Drunkard>
-//{
-//private:
-//
-//	DrinkAGlass() {}
-//
-//	//copy ctor and assignment should be private
-//	DrinkAGlass(const DrinkAGlass&);
-//	DrinkAGlass& operator=(const DrinkAGlass&);
-//
-//public:
-//
-//	//this is a singleton
-//	static DrinkAGlass* Instance();
-//
-//	virtual void Enter(Drunkard* drunkard);
-//
-//	virtual void Execute(Drunkard* drunkard);
-//
-//	virtual void Exit(Drunkard* drunkard);
-//
-//	virtual bool OnMessage(Drunkard* agent, const Telegram& msg);
-//};
+class DrunkardDrinkAGlass : public State<Drunkard>
+{
+private:
+
+	DrunkardDrinkAGlass() {}
+
+	//copy ctor and assignment should be private
+	DrunkardDrinkAGlass(const DrunkardDrinkAGlass&);
+	DrunkardDrinkAGlass& operator=(const DrunkardDrinkAGlass&);
+
+public:
+
+	//this is a singleton
+	static DrunkardDrinkAGlass* Instance();
+
+	virtual void Enter(Drunkard* drunkard);
+
+	virtual void Execute(Drunkard* drunkard);
+
+	virtual void Exit(Drunkard* drunkard);
+
+	virtual bool OnMessage(Drunkard* agent, const Telegram& msg);
+};
 
 //------------------------------------------------------------------------
 //
 //  Fight with the miner
 //------------------------------------------------------------------------
-class FightWithMiner : public State<Drunkard>
+class DrunkardFightWithMiner : public State<Drunkard>
 {
 private:
 
-	FightWithMiner() {}
+	DrunkardFightWithMiner() {}
 
 	//copy ctor and assignment should be private
-	FightWithMiner(const FightWithMiner&);
-	FightWithMiner& operator=(const FightWithMiner&);
+	DrunkardFightWithMiner(const DrunkardFightWithMiner&);
+	DrunkardFightWithMiner& operator=(const DrunkardFightWithMiner&);
 
 public:
 
 	//this is a singleton
-	static FightWithMiner* Instance();
+	static DrunkardFightWithMiner* Instance();
 
 	virtual void Enter(Drunkard* drunkard);
 

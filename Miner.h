@@ -53,6 +53,9 @@ private:
   //the higher the value, the more tired the miner
   int                   m_iFatigue;
 
+  // the higher the value; the slower the glass will be emptied
+  int m_glassContainer;
+
 public:
 
   Miner(int id):m_Location(shack),
@@ -101,8 +104,11 @@ public:
   void          SetWealth(int val){m_iMoneyInBank = val;}
   void          AddToWealth(int val);
 
-  bool          Thirsty()const; 
-  void          BuyAndDrinkAWhiskey(){m_iThirst = 0; m_iMoneyInBank-=2;}
+  bool          Thirsty()const;
+  void          BuyAndDrinkAWhiskey() { m_iThirst = 0; m_iMoneyInBank -= 2; m_glassContainer = 3; }
+
+  void          DrinkWhiskey() { m_glassContainer -= 1; }
+  bool		    EmptyGlass()const { return (m_glassContainer == 0); }
 
 };
 
