@@ -21,13 +21,6 @@ BarmanGlobalState* BarmanGlobalState::Instance()
 
 void BarmanGlobalState::Execute(Barman* barman)
 {
-	//1 in 10 chance of needing the bathroom (provided she is not already
-	//in the bathroom)
-	/*if ((RandFloat() < 0.1) && !barman->GetFSM()->isInState(*VisitBathroom::Instance()))
-	{
-	barman->GetFSM()->ChangeState(VisitBathroom::Instance());
-	}*/
-
 
 }
 bool BarmanGlobalState::OnMessage(Barman* barman, const Telegram& msg)

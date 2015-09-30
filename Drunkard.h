@@ -85,6 +85,7 @@ public:
 	bool          Fatigued()const;
 	void          DecreaseFatigue() { m_iFatigue -= 1; }
 	void          IncreaseFatigue() { m_iFatigue += 1; }
+	void          SetFatigue(int val) { m_iFatigue = val; }
 
 	void          DrinkWhiskey() { m_drunkness += 1; m_glassContainer -= 1; m_iFatigue += 1; }
 

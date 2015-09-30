@@ -96,9 +96,11 @@ public:
   void          AddToGoldCarried(int val);
   bool          PocketsFull()const{return m_iGoldCarried >= MaxNuggets;}
 
+  bool          ReadyToWork()const;
   bool          Fatigued()const;
   void          DecreaseFatigue(){m_iFatigue -= 1;}
   void          IncreaseFatigue(){m_iFatigue += 1;}
+  void          SetFatigue(int val) { m_iFatigue = val; }
 
   int           Wealth()const{return m_iMoneyInBank;}
   void          SetWealth(int val){m_iMoneyInBank = val;}

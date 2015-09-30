@@ -39,6 +39,11 @@ bool Miner::Thirsty()const
   return false;
 }
 
+bool Miner::ReadyToWork()const
+{
+	return m_iFatigue < 1;
+}
+
 bool Miner::Fatigued()const
 {
   if (m_iFatigue > TirednessThreshold)

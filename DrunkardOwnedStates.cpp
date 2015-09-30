@@ -290,6 +290,7 @@ DrunkardFightWithMiner* DrunkardFightWithMiner::Instance()
 void DrunkardFightWithMiner::Enter(Drunkard* pDrunkard)
 {
 	pDrunkard->Speak("I WILL KILL YOU !!!! ");
+	pDrunkard->SetFatigue(2);
 }
 
 void DrunkardFightWithMiner::Execute(Drunkard* pDrunkard)

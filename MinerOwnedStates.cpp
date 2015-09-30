@@ -164,7 +164,7 @@ void GoHomeAndSleepTilRested::Enter(Miner* pMiner)
 void GoHomeAndSleepTilRested::Execute(Miner* pMiner)
 { 
   //if miner is not fatigued start to dig for nuggets again.
-  if (!pMiner->Fatigued())
+  if (pMiner->ReadyToWork())
   {
 	  pMiner->Speak("All mah fatigue has drained away. Time to find more gold!");
 
@@ -461,6 +461,7 @@ MinerFightWithDrunkard* MinerFightWithDrunkard::Instance()
 void MinerFightWithDrunkard::Enter(Miner* pMiner)
 {
 	pMiner->Speak("I will hurt you !");
+	pMiner->SetFatigue(3);
 }
 
 void MinerFightWithDrunkard::Execute(Miner* pMiner)
